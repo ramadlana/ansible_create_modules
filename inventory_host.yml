@@ -1,0 +1,16 @@
+test_device_parent:
+  children:
+    test_device_child:
+      hosts:
+        pe_vpn_1:
+          ansible_host: 10.14.19.22
+
+        pe_vpn_2:
+          ansible_host: 10.14.19.21
+      vars:
+          ansible_user: cisco
+          ansible_ssh_pass: cisco
+          ansible_network_os: iosxr
+          ansible_connection: network_cli
+          connection: network_cli
+          gather_facts: no

@@ -1,0 +1,47 @@
+- name: TEST MULTIPOLAR MODULE
+  hosts: test_device_child
+  gather_facts: no
+
+
+  tasks:
+    # THIS RUN SUCCESS TASK AND PRINT IT ON CONSOLE USING DEBUG
+    - name: RUN SUCCESS MODULE
+      multipolar_module_hello:
+        command: 'hidayah ramadlana'
+        isChanged: false
+        ansible_host: '{{ hostvars[inventory_hostname].ansible_host }}'
+        ansible_network_os: '{{ hostvars[inventory_hostname].ansible_network_os }}'
+        ansible_user: '{{ hostvars[inventory_hostname].ansible_user }}'
+        ansible_ssh_pass: '{{ hostvars[inventory_hostname].ansible_ssh_pass }}'
+      register: your_success_task_vars
+
+    - name: PRINT OUTPUT SUCCESS MODULE
+      debug:
+        msg: '{{ your_success_task_vars }}'
+    
+    # THIS RUN CHECK MODE: SUCCESS TASK AND PRINT IT ON CONSOLE USING DEBUG
+    - name: RUN CHECK MODE
+      multipolar_module_hello:
+        command: 'hidayah ramadlana'
+        isChanged: false
+        ansible_host: '{{ hostvars[inventory_hostname].ansible_host }}'
+        ansible_network_os: '{{ hostvars[inventory_hostname].ansible_network_os }}'
+        ansible_user: '{{ hostvars[inventory_hostname].ansible_user }}'
+        ansible_ssh_pass: '{{ hostvars[inventory_hostname].ansible_ssh_pass }}'
+      check_mode: yes
+      register: your_check_mode_var
+    - name: PRINT OUTPUT SUCCESS MODULE
+      debug:
+        msg: '{{ your_check_mode_var }}'
+
+    # THIS RUN FAILED TASK AND PRINT IT ON CONSOLE USING DEBUG
+    - name: RUN FAILED MODULE
+      multipolar_module_hello:
+        command: 'fail me'
+        isChanged: false
+      register: your_failed_var
+
+    - name: PRINT OUTPUT FAILED MODULE
+      debug:
+        msg: '{{ your_failed_var }}'
+    

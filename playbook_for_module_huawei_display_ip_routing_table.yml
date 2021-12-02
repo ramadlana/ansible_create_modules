@@ -1,0 +1,19 @@
+- name: TEST MULTIPOLAR MODULE
+  hosts: localhost
+  gather_facts: no
+
+
+  tasks:
+    - name: RUN CALL HUAWEI MODULE
+      multipolar_module_huawei_display_ip_routing_table:
+        command: 'display ip routing-table'
+        isChanged: false
+        # ansible_host: '{{ hostvars[inventory_hostname].ansible_host }}'
+        # ansible_network_os: '{{ hostvars[inventory_hostname].ansible_network_os }}'
+        # ansible_user: '{{ hostvars[inventory_hostname].ansible_user }}'
+        # ansible_ssh_pass: '{{ hostvars[inventory_hostname].ansible_ssh_pass }}'
+      register: output
+
+    - name: PRINT OUTPUT SUCCESS MODULE
+      debug:
+        msg: '{{ output }}'

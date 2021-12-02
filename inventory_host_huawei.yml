@@ -1,0 +1,11 @@
+lab:
+  children:
+    metrodevice:
+      hosts:
+        metro_service1:
+          ansible_host: 10.14.19.23
+
+      vars:
+          ansible_user: huawei
+          ansible_ssh_pass: Huawei@123
+          ansible_network_os: huawei
