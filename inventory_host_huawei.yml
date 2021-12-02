@@ -9,3 +9,4 @@ lab:
           ansible_user: huawei
           ansible_ssh_pass: Huawei@123
           ansible_network_os: huawei
+          ansible_platform: vrp

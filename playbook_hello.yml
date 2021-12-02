@@ -1,7 +1,8 @@
+# ansible-playbook -i inventory_host_hello.yml  playbook_hello.yml
+
 - name: TEST MULTIPOLAR MODULE
   hosts: test_device_child
   gather_facts: no
-
 
   tasks:
     # THIS RUN SUCCESS TASK AND PRINT IT ON CONSOLE USING DEBUG
@@ -19,6 +20,8 @@
       debug:
         msg: '{{ your_success_task_vars }}'
     
+
+
     # THIS RUN CHECK MODE: SUCCESS TASK AND PRINT IT ON CONSOLE USING DEBUG
     - name: RUN CHECK MODE
       multipolar_module_hello:
@@ -33,6 +36,8 @@
     - name: PRINT OUTPUT SUCCESS MODULE
       debug:
         msg: '{{ your_check_mode_var }}'
+
+
 
     # THIS RUN FAILED TASK AND PRINT IT ON CONSOLE USING DEBUG
     - name: RUN FAILED MODULE

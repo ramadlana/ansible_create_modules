@@ -8,14 +8,6 @@ __metaclass__ = type
 
 from ansible.module_utils.basic import AnsibleModule
 
-
-
-# hardcoded var
-device_ip = '10.14.19.80'
-device_username = 'huawei'
-device_password = 'Huawei@123'
-device_type = 'huawei'
-
 DOCUMENTATION = r'''
 '''
 
@@ -34,14 +26,17 @@ def run_module():
     # param input
     module_args = dict(
         command=dict(type='str', required=True),
-        isChanged=dict(type='bool', required=False, default=False)
+        ansible_host=dict(type='str', required=False),
+        ansible_network_os=dict(type='str', required=False),
+        ansible_user=dict(type='str', required=False),
+        ansible_ssh_pass=dict(type='str', required=False),
+        ansible_platform=dict(type='str', required=False),
     )
 
     # SOP: 2 Change this
     # result prototype
     result = dict(
         changed=False,
-        command="",
         return_from_devices=""
     )
 
@@ -76,28 +71,27 @@ def run_module():
         net_connect = ConnectHandler(**huawei)
         return net_connect.send_command(command)
 
-    result['command']=module.params['command']
-    # Variable HARDCODED
-    device_ip = '10.14.19.80'
-    device_username = 'huawei'
-    device_password = 'Huawei@123'
-    device_type = 'huawei'
-    device_port = 22
-    device_cli_output = call_huawei(command=module.params['command'],device_type=device_type, device_ip=device_ip, device_username=device_username, device_password=device_password, device_port=device_port)
+    proposed_args = {
+        'command': module.params['command'],
+        'device_type': module.params['ansible_network_os'],
+        'device_ip':   module.params['ansible_host'],
+        'device_username': module.params['ansible_user'],
+        'device_password': module.params['ansible_ssh_pass'],
+        # hardcode port
+        'device_port': 22
+    }
+    device_cli_output = call_huawei(**proposed_args)
 
-    # NTC TEMPLATE PARSER
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~ NTC TEMPLATE PARSER ~~~~~~~~~~~~~~~~~~~~~~~~~~~
     """ntc_templates.parse."""
     import os
 
-    # Due to TextFSM library issues on Windows, it is better to not fail on import
-    # Instead fail at runtime (i.e. if method is actually used).
     try:
         from textfsm import clitable
 
         HAS_CLITABLE = True
     except ImportError:
         HAS_CLITABLE = False
-
 
     def _get_template_dir():
         template_dir = os.environ.get("NTC_TEMPLATES_DIR")
@@ -157,12 +151,13 @@ def run_module():
 
         return structured_data
 
-    # END OF TEMPLATE PARSER
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~ END OF TEMPLATE PARSER ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    # NTC TEMPLATE LOCATION
+    # NTC TEMPLATE LOCATION PLEASE CHANGE THIS TO UPDATED NTC TEMPLATES DIRECTORY
     os.environ["NTC_TEMPLATES_DIR"] = "/usr/share/ansible/plugins/modules/ntc-templates/ntc_templates/templates"
 
-    parsed = parse_output(platform="vrp", command=module.params['command'], data=device_cli_output)
+
+    parsed = parse_output(platform=module.params['ansible_platform'], command=module.params['command'], data=device_cli_output)
 
     # RESULT MODIFICATION
     result['return_from_devices'] = parsed
@@ -170,8 +165,8 @@ def run_module():
     # SOP: 3 END OF LOGIC FOR RETURN MESSAGE 
     
     # [do not change] is Changed Logic
-    if module.params['isChanged']:
-        result['changed'] = True
+    # if its True, then changed will be true with yellow text
+    # result['changed'] = True
 
     # [do not change] Fail Condition Logic
     if module.params['command'] == 'fail me':
