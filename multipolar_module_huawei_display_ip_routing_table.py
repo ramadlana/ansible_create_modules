@@ -9,13 +9,63 @@ __metaclass__ = type
 from ansible.module_utils.basic import AnsibleModule
 
 DOCUMENTATION = r'''
+This is module for HUAWEI vrp with command display ip routing-table
+and only for public route-table
+please locate this on
+/usr/share/ansible/plugins/modules
 '''
 
 EXAMPLES = r'''
+- name: TEST MULTIPOLAR MODULE
+  hosts: metrodevice
+  connection: local
+  gather_facts: no
+
+  tasks:
+    - name: RUN CALL HUAWEI MODULE
+      multipolar_module_huawei_display_ip_routing_table:
+        command: 'display ip routing-table'
+        ansible_host: '{{ hostvars[inventory_hostname].ansible_host }}'
+        ansible_network_os: '{{ hostvars[inventory_hostname].ansible_network_os }}'
+        ansible_user: '{{ hostvars[inventory_hostname].ansible_user }}'
+        ansible_ssh_pass: '{{ hostvars[inventory_hostname].ansible_ssh_pass }}'
+        ansible_platform: '{{ hostvars[inventory_hostname].ansible_platform }}'
+      register: output
+
+    - name: PRINT OUTPUT SUCCESS MODULE
+      debug:
+        msg: '{{ output }}'
 '''
 
 RETURN = r'''
-# These are examples of possible return values, and in general should use other names for return values.
+"msg": {
+        "ansible_facts": {
+            "discovered_interpreter_python": "/usr/libexec/platform-python"
+        },
+        "changed": false,
+        "failed": false,
+        "return_from_devices": [
+            {
+                "cost": "65000",
+                "destination": "1.1.1.1/32",
+                "flag": "D",
+                "interface": "Eth-Trunk4",
+                "nexthop": "172.31.104.69",
+                "pre": "10",
+                "proto": "OSPF",
+                "routetables": "Public"
+            },
+            {
+                "cost": "0",
+                "destination": "1.1.1.5/32",
+                "flag": "D",
+                "interface": "LoopBack0",
+                "nexthop": "127.0.0.1",
+                "pre": "0",
+                "proto": "Direct",
+                "routetables": "Public"
+            },
+    ----- OMITED ----------
 '''
 
 # all logic function
