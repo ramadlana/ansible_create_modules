@@ -1,0 +1,54 @@
+---
+oasis:
+  children:
+    mpls:
+      children:
+        pe_router:
+          hosts:
+            pe_vpn_1:
+              ansible_host: 10.14.19.22
+
+            pe_vpn_2:
+              ansible_host: 10.14.19.21
+              
+          vars:
+              ansible_user: cisco
+              ansible_ssh_pass: cisco
+              ansible_network_os: iosxr
+              ansible_connection: network_cli
+              connection: network_cli
+              gather_facts: no
+              ansible_python_interpreter: auto_silent
+
+    metro_devices:
+      children:
+        metro_access:
+          hosts:
+            metro_access1:
+              ansible_host: 10.14.19.80
+          vars:
+            ansible_user: huawei
+            ansible_ssh_pass: Huawei@123
+            ansible_network_os: huawei
+            ansible_platform: vrp
+
+        metro_service:
+          hosts:
+            metro_service1:
+              ansible_host: 10.14.19.23
+          vars:
+            ansible_user: huawei
+            ansible_ssh_pass: Huawei@123
+            ansible_network_os: huawei
+            ansible_platform: vrp
+    
+    huawei_olt:
+      hosts:
+        olt_1:
+          ansible_host: 10.14.19.26
+      vars:
+          ansible_user: huawei
+          ansible_ssh_pass: huawei123
+          ansible_network_os: huawei_olt
+          ansible_platform: huawei_olt
+

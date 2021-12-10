@@ -1,0 +1,17 @@
+# ansible-playbook -i inventory_host_huawei.yml playbook_for_module_huawei_display_ip_routing_table.yml
+- name: READ VARIABLE FROM FILES
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  
+  tasks:
+  - name: read files
+    include_vars:
+      file: /usr/share/ansible/plugins/modules/playbook_test/var_vlan_desc
+      name: vlan_desc
+  
+  - name: print that
+    debug:
+      msg: '{{item.vlan}}'
+    when: item.desc is search("SPEEDY")
+    with_items: '{{ vlan_desc.return_from_devices }}'

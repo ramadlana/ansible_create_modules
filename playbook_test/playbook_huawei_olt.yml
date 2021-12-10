@@ -1,0 +1,23 @@
+# ansible-playbook -i inventory_host_huawei.yml playbook_for_module_huawei_display_ip_routing_table.yml
+- name:  MULTIPOLAR MODULE HUAWEI OLT
+  hosts: huawei_olt
+  connection: local
+  gather_facts: no
+  vars:
+    metroaccess: {interface: gi3/0/1.101, dot1q: 3000, peer: 1.1.1.5, vc: 101}
+    
+
+  tasks:
+    - name: RUN CALL HUAWEI MODULE
+      huawei_config:
+        command: ["interface {{metroaccess.interface}}", "vlan-type dot1q 101", "mpls l2vc 1.1.1.1 101", "statistic enable"]
+        ansible_host: '{{ hostvars[inventory_hostname].ansible_host }}'
+        ansible_network_os: '{{ hostvars[inventory_hostname].ansible_network_os }}'
+        ansible_user: '{{ hostvars[inventory_hostname].ansible_user }}'
+        ansible_ssh_pass: '{{ hostvars[inventory_hostname].ansible_ssh_pass }}'
+        ansible_platform: '{{ hostvars[inventory_hostname].ansible_platform }}'
+      register: output
+
+    - name: PRINT OUTPUT SUCCESS MODULE
+      debug:
+        msg: '{{ output }}'

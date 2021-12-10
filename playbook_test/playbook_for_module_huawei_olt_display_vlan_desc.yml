@@ -1,0 +1,31 @@
+# ansible-playbook -i inventory_host_huawei.yml playbook_for_module_huawei_display_ip_routing_table.yml
+- name: TEST MULTIPOLAR MODULE OLT DISPLAY VLAN
+  hosts: huawei_olt
+  connection: local
+  gather_facts: no
+
+  tasks:
+    - name: RUN CALL HUAWEI OLT MODULE
+      huawei_olt_command_display_vlan_desc:
+        ansible_host: '{{ hostvars[inventory_hostname].ansible_host }}'
+        ansible_network_os: '{{ hostvars[inventory_hostname].ansible_network_os }}'
+        ansible_platform: '{{ hostvars[inventory_hostname].ansible_platform }}'
+        ansible_user: '{{ hostvars[inventory_hostname].ansible_user }}'
+        ansible_ssh_pass: '{{ hostvars[inventory_hostname].ansible_ssh_pass }}'
+      register: output
+
+    # Save Variable into files
+    - name: Copy Varibale to Local Files
+      local_action: copy content={{ output }} dest=/usr/share/ansible/plugins/modules/var_vlan_desc
+
+    # Debug Output
+    # - name: PRINT OUTPUT SUCCESS MODULE
+    #   debug:
+    #     msg: '{{ output.return_from_devices }}'
+
+    # Debug LOOP and WHEN (CONDITIONAL)
+    # - name: Loop output from olt
+    #   debug:
+    #     msg: '{{ item.desc }}'
+    #   when: item is search("SPEEDY")
+    #   with_items: '{{ output.return_from_devices }}'

@@ -23,3 +23,8 @@ mv multipolar_module_huawei_display_ip_routing_table.py /usr/share/ansible/colle
 
 ansible-playbook -i inventory_host_huawei.yml playbook_for_module_huawei_display_ip_routing_table_using_collection.yml 
 ```
+
+Template Location
+```
+os.environ["NTC_TEMPLATES_DIR"] = "/usr/share/ansible/plugins/modules/ntc-templates/ntc_templates/templates"
+```
