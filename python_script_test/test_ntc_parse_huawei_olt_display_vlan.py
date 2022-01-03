@@ -4,13 +4,10 @@
 # 3. edit the textfsm
 # 4. run the test here
 
-import os
-import json
-from ntc_templates.parse import parse_output
+import os, json
+from parse import parse_output
 
-directory = os.path.dirname(__file__)
-fileLoc = os.path.join(directory, "ntc-templates/ntc_templates/templates")
-os.environ["NTC_TEMPLATES_DIR"] = fileLoc
+os.environ["NTC_TEMPLATES_DIR"] = "/opt/ntc-templates/ntc_templates/templates"
 
 unparsed="""
 display vlan  desc 1-4093 | no-more 

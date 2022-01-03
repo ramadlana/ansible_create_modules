@@ -1,6 +1,6 @@
-# ansible-playbook -i inventory_host_huawei.yml playbook_for_module_huawei_display_ip_routing_table.yml
+# ansible-playbook -i playbook_test/inventory_host_dds.yml playbook_test/playbook_for_module_huawei_display_ip_routing_table.yml 
 - name: TEST MULTIPOLAR MODULE
-  hosts: metrodevice
+  hosts: metro_service1
   connection: local
   gather_facts: no
 

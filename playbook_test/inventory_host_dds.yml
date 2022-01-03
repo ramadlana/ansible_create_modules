@@ -41,6 +41,10 @@ oasis:
             ansible_ssh_pass: Huawei@123
             ansible_network_os: huawei
             ansible_platform: vrp
+      vars:
+        metro_service_rid: 1.1.1.5
+        metro_access_rid: 1.1.1.1
+        vc_id: 555
     
     huawei_olt:
       hosts:

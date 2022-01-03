@@ -1,4 +1,4 @@
-# ansible-playbook -i inventory_host_hello.yml  playbook_hello.yml
+# ansible-playbook -i playbook_test/inventory_host_hello.yml  playbook_test/playbook_hello.yml
 
 - name: TEST MULTIPOLAR MODULE
   hosts: test_device_child

@@ -1,4 +1,4 @@
-# ansible-playbook -i inventory_host_huawei.yml playbook_for_module_huawei_display_ip_routing_table.yml
+# ansible-playbook -i playbook_test/inventory_host_dds.yml playbook_test/playbook_for_module_huawei_olt_display_vlan_desc.yml
 - name: TEST MULTIPOLAR MODULE OLT DISPLAY VLAN
   hosts: huawei_olt
   connection: local
@@ -6,7 +6,7 @@
 
   tasks:
     - name: RUN CALL HUAWEI OLT MODULE
-      huawei_olt_command_display_vlan_desc:
+      multipolar_huawei_olt_command_display_vlan_desc:
         ansible_host: '{{ hostvars[inventory_hostname].ansible_host }}'
         ansible_network_os: '{{ hostvars[inventory_hostname].ansible_network_os }}'
         ansible_platform: '{{ hostvars[inventory_hostname].ansible_platform }}'
@@ -16,7 +16,7 @@
 
     # Save Variable into files
     - name: Copy Varibale to Local Files
-      local_action: copy content={{ output }} dest=/usr/share/ansible/plugins/modules/var_vlan_desc
+      local_action: copy content={{ output }} dest=/opt/public_var_ansible/var_vlan_desc
 
     # Debug Output
     # - name: PRINT OUTPUT SUCCESS MODULE

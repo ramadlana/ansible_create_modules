@@ -3,7 +3,12 @@
 # Copyright: (c) 2021, Hidayah Ramadlana <hidayah.ramadalana@multipolar.com>
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
+# NTC TEMPLATE LOCATION PLEASE CHANGE THIS TO UPDATED NTC TEMPLATES DIRECTORY
 from __future__ import (absolute_import, division, print_function)
+import os
+os.environ["NTC_TEMPLATES_DIR"] = "/opt/ntc-templates/ntc_templates/templates"
+
+
 __metaclass__ = type
 
 from ansible.module_utils.basic import AnsibleModule
@@ -99,7 +104,6 @@ def run_module():
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~ NTC TEMPLATE PARSER ~~~~~~~~~~~~~~~~~~~~~~~~~~~
     """ntc_templates.parse."""
-    import os
 
     try:
         from textfsm import clitable
@@ -167,9 +171,6 @@ def run_module():
         return structured_data
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~ END OF TEMPLATE PARSER ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    # NTC TEMPLATE LOCATION PLEASE CHANGE THIS TO UPDATED NTC TEMPLATES DIRECTORY
-    os.environ["NTC_TEMPLATES_DIR"] = "/usr/share/ansible/plugins/modules/ntc-templates/ntc_templates/templates"
 
 
     parsed = parse_output(platform=module.params['ansible_platform'], command='display vlan  desc 1-4093 | no-more', data=device_cli_output)

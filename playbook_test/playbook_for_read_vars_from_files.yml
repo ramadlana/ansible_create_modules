@@ -1,4 +1,4 @@
-# ansible-playbook -i inventory_host_huawei.yml playbook_for_module_huawei_display_ip_routing_table.yml
+# ansible-playbook -i playbook_test/inventory_host_dds.yml playbook_test/playbook_for_read_vars_from_files.yml 
 - name: READ VARIABLE FROM FILES
   hosts: localhost
   connection: local
@@ -7,7 +7,7 @@
   tasks:
   - name: read files
     include_vars:
-      file: /usr/share/ansible/plugins/modules/playbook_test/var_vlan_desc
+      file: /opt/public_var_ansible/var_vlan_desc
       name: vlan_desc
   
   - name: print that

@@ -25,6 +25,12 @@ ansible-playbook -i inventory_host_huawei.yml playbook_for_module_huawei_display
 ```
 
 Template Location
+on Linux ENV Vars
+export NTC_TEMPLATES_DIR=/opt/ntc-templates/ntc_templates/templates
+
+or
+
+on script.py
 ```
-os.environ["NTC_TEMPLATES_DIR"] = "/usr/share/ansible/plugins/modules/ntc-templates/ntc_templates/templates"
+os.environ["NTC_TEMPLATES_DIR"] = "/opt/ntc-templates/ntc_templates/templates"
 ```
