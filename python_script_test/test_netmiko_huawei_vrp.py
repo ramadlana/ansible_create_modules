@@ -17,13 +17,12 @@ def call_huawei(command,device_type, device_ip, device_username, device_password
     return out
 
 proposed_args = {
-        # 'command': module.params['command'],
-        'command': ["xinterface Eth-Trunk6.101", "vlan-type dot1q 101", "mpls l2vc 1.1.1.1 101", "statistic enable"],
+        # 'command': ["system-view", "interface GigabitEthernet3/0/1.101", "vlan-type dot1q 101", "mpls l2vc 1.1.1.5 101", "statistic enable"],
+        'command': ["sysname PE-D1-RDC-TRANSIT3", "interface LoopBack 190"],
         'device_type': 'huawei',
-        'device_ip':   '10.14.19.23',
+        'device_ip':   '10.14.19.80',
         'device_username': 'huawei',
         'device_password': 'Huawei@123',
-        # hardcode port
         'device_port': 22
     }
 device_cli_output = call_huawei(**proposed_args)

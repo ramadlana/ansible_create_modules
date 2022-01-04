@@ -71,9 +71,14 @@ def run_module():
         'port' : device_port
         }
         net_connect = ConnectHandler(**huawei)
-        out = net_connect.send_config_set(command)
-        net_connect.disconnect()
-        return out
+        try:
+            out = net_connect.send_config_set(command)
+            net_connect.disconnect()
+            result['changed'] = False
+            return out
+        except:
+            result['changed'] = True
+            return "configured"
 
     proposed_args = {
         'command': module.params['command'],
