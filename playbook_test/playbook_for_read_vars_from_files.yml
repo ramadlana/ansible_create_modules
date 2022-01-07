@@ -15,3 +15,13 @@
       msg: '{{item.vlan}}'
     when: item.desc is search("SPEEDY")
     with_items: '{{ vlan_desc.return_from_devices }}'
+
+  - name: read files
+    include_vars:
+      file: /opt/public_var_ansible/metro_pair
+      name: metro_pair
+  
+  - name: metro pair print
+    debug:
+      msg: '{{metro_pair.dds.metro_service}}'
+  
