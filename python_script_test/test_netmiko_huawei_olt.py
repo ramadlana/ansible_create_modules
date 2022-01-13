@@ -30,7 +30,7 @@ def call_huawei(command,device_type, device_ip, device_username, device_password
 
 proposed_args = {
         # 'command': module.params['command'],
-        'command': "display vlan  desc 1-4093 | no-more",
+        'command': "display current-configuration | include service-port | include user-vlan 2250",
         'device_type': 'huawei_olt',
         'device_ip': '10.14.19.26',
         'device_username': 'huawei',
