@@ -1,0 +1,36 @@
+# ansible-playbook -i playbook_test/inventory_host_dds.yml playbook_test/playbook_for_module_huawei_olt_config_service_port.yml
+- name: TEST MULTIPOLAR MODULE OLT DISPLAY VLAN
+  hosts: huawei_olt
+  connection: local
+  gather_facts: no
+  vars:
+    originate_vlan: '3001'
+    designated_vlan: '3001'
+
+  tasks:
+    - name: RUN CALL HUAWEI OLT MODULE
+      multipolar_huawei_olt_config_service_port:
+        command_undo: 'undo service-port 69'
+        command_set: 'service-port 69 vlan {{ designated_vlan }} gpon  0/2/0 ont 5 gemport 3 multi-service user-vlan 200 tag-transform translate inbound traffic-table index 163 outbound traffic-table index 250'
+        ansible_host: '{{ hostvars[inventory_hostname].ansible_host }}'
+        ansible_network_os: '{{ hostvars[inventory_hostname].ansible_network_os }}'
+        ansible_platform: '{{ hostvars[inventory_hostname].ansible_platform }}'
+        ansible_user: '{{ hostvars[inventory_hostname].ansible_user }}'
+        ansible_ssh_pass: '{{ hostvars[inventory_hostname].ansible_ssh_pass }}'
+      register: output
+
+    # Save Variable into files
+    # - name: Copy Varibale to Local Files
+    #   local_action: copy content={{ output }} dest=/opt/public_var_ansible/var_vlan_desc
+
+    # Debug Output
+    - name: PRINT OUTPUT SUCCESS MODULE
+      debug:
+        msg: '{{ output.return_from_devices }}'
+
+    # Debug LOOP and WHEN (CONDITIONAL)
+    # - name: Loop output from olt
+    #   debug:
+    #     msg: '{{ item.desc }}'
+    #   when: item is search("SPEEDY")
+    #   with_items: '{{ output.return_from_devices }}'

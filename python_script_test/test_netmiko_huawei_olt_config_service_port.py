@@ -31,8 +31,8 @@ def call_huawei(command,command2, device_type, device_ip, device_username, devic
 
 proposed_args = {
         # 'command': module.params['command'],
-        'command': "undo service-port vlan 3000 gpon 0/2/0 ont 6 gemport 1",
-        'command2': "service-port vlan 3000 gpon 0/2/0 ont 6 gemport 2 multi-service user-vlan 200 tag-transform translate inbound traffic-table name UP-10M outbound traffic-table name DOWN-15M",
+        'command': "undo service-port 61",
+        'command2': "service-port vlan 3001 gpon  0/2/0 ont 5 gemport 2 multi-service user-vlan 200 tag-transform translate inbound traffic-table index 163 outbound traffic-table index 250",
         'device_type': 'huawei_olt',
         'device_ip': '10.14.19.26',
         'device_username': 'huawei',
