@@ -93,10 +93,10 @@ def run_module():
     proposed_args = {
             # 'command': module.params['command'],
             'command': "display vlan  desc 1-4093 | no-more",
-            'device_type': 'huawei_olt',
-            'device_ip': '10.14.19.26',
-            'device_username': 'huawei',
-            'device_password': 'huawei123',
+            'device_type': module.params['ansible_network_os'],
+            'device_ip': module.params['ansible_host'],
+            'device_username': module.params['ansible_user'],
+            'device_password': module.params['ansible_ssh_pass'],
             # hardcode port
             'device_port': 22
         }
