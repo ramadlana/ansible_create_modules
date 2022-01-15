@@ -16,6 +16,12 @@
     when: item.desc is search("SPEEDY")
     with_items: '{{ vlan_desc.return_from_devices }}'
 
+  - name: print that
+    debug:
+      msg: '{{item.vlan}}'
+    when: item.vlan >= "2250"
+    with_items: '{{ vlan_desc.return_from_devices }}'
+
   - name: read files
     include_vars:
       file: /opt/public_var_ansible/metro_pair

@@ -1,13 +1,13 @@
-# ansible-playbook -i playbook_test/inventory_host_dds.yml playbook_test/playbook_for_module_huawei_olt_config_service_port.yml
-- name: EXCEED VLAN MOVE 
+# ansible-playbook -i playbook_test/inventory_host_dds.yml playbook_test/playbook_for_module_huawei_olt_config_service_port_undo.yml
+- name: UNDO-DEMO- EXCEED VLAN MOVE 
   hosts: huawei_olt
   connection: local
   gather_facts: no
   vars:
-    designated_vlan: '3002'
-    target_gemindex: '3'
+    designated_vlan: '3001'
+    target_gemindex: '2'
     vlan_max_subs: 17
-    subscriber_to_move: 8
+    count_ont_to_move: 8
 
   tasks:
     - name: Get all available vlan 
@@ -20,11 +20,9 @@
         ansible_ssh_pass: '{{ hostvars[inventory_hostname].ansible_ssh_pass }}'
       register: all_vlan
     
-    - name: Get exceed vlan (subs more than {{ vlan_max_subs }})
+    - name: reset to 3001 demo
       set_fact:
-        exceed_vlan: '{{item.vlan}}'
-      when: item.servportnum >= "{{vlan_max_subs}}"
-      with_items: "{{all_vlan.return_from_devices}}"
+        exceed_vlan: '3002'
 
     - name: Show vlan with member than  {{vlan_max_subs}}
       debug:
@@ -50,6 +48,5 @@
         ansible_user: '{{ hostvars[inventory_hostname].ansible_user }}'
         ansible_ssh_pass: '{{ hostvars[inventory_hostname].ansible_ssh_pass }}'
       loop_control:
-        label: " Moving SERVICEPORT-INDEX {{ item.index }} from VLAN -{{ item.vlanid }} gemindex-{{item.vci}} into VLAN -{{designated_vlan}} gemindex-{{target_gemindex}}"
-      # 9 means count of olt that want to move to new vlan
+        label: "Moving ONT-INDEX {{ item.index }} from VLAN - {{ item.vlanid }} into VLAN - {{designated_vlan}}"
       with_items: '{{ service_port.return_from_devices[:9] }}'
