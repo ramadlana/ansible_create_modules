@@ -8,6 +8,8 @@ __metaclass__ = type
 
 from ansible.module_utils.basic import AnsibleModule
 
+import time
+
 DOCUMENTATION = r'''
 
 '''
@@ -68,11 +70,13 @@ def run_module():
         'host':   device_ip,
         'username': device_username,
         'password': device_password,
-        'port' : device_port
+        'port' : device_port,
+        'conn_timeout': 15
         }
         net_connect = ConnectHandler(**huawei)
+        time.sleep(1)
         try:
-            out = net_connect.send_config_set(command)
+            out = net_connect.send_config_set(command, delay_factor=1)
             net_connect.disconnect()
             result['changed'] = False
             return out
