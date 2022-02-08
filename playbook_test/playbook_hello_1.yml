@@ -1,0 +1,14 @@
+- name: TEST MULTIPOLAR MODULE
+  hosts: localhost
+  gather_facts: no
+
+  tasks:
+    - name: call hello 1
+      multipolar_test_hello_1:
+        ucapan: "multipolar"
+        isChanged: true
+      register: test123
+    
+    - name: print output task
+      debug: 
+        msg: '{{test123}}'

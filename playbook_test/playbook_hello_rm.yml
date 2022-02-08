@@ -1,0 +1,29 @@
+- name: PB TEST
+  hosts: localhost
+  connection: local
+  vars_prompt:
+   - name: nama
+     prompt: masukan nama
+     private: no
+   - name: alamat
+     prompt: masukan alamat
+     private: no
+   - name: umur
+     prompt: masukan umur
+     private: no
+  gather_facts: false
+
+  tasks:
+  - name: Print anak muda
+  ansible.builtin.debug:
+    msg: 
+    - "anda masih muda" 
+    - "hello nama saya: "{{nama}}" umur saya "{{umur}}" dan beralamat di "{{alamat}}""
+  when: "{{umur}}" <= 30  
+
+  - name: Print orang tua
+  ansible.builtin.debug:
+    msg: 
+    - "anda masih muda" 
+    - "hello nama saya: "{{nama}}" umur saya "{{umur}}" dan beralamat di "{{alamat}}""
+  when: "{{umur}}" >= 30
